@@ -1,11 +1,12 @@
-![image](https://github.com/roruback/my-finance-web-dotnet/assets/145405984/b2f93cdf-7218-4547-b335-a33e6e2f1660)# my-finance-web-dotnet
 Trabalho da Disciplina de Práticas de Implementação e Evolução de Software - Professor: Filipe Tório.
 Pós Graduação em Engenharia de Software  - PUC MINAS
 
 Grupo de alunos: 
+- Daniel Nascimento Cruz
 - Fabrício Gomes Ribeiro
 - Rodolfo Oliveira Ruback
-- 
+- Thalles Oliveira
+  
 
 # ARQUITETURA PROPOSTA:
 
