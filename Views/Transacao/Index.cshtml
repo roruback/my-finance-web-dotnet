@@ -1,0 +1,82 @@
+@using System.Globalization;
+@{
+    ViewData["Title"] = "Transações";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<button type="button" class="btn btn-block btn-primary" onclick="Adicionar()">Nova</button>
+<br /><br />
+
+<!-- Modal -->
+<div class="modal fade" id="modal_confirm" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Confirma exclusão do item?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"></div>
+            <input type="hidden" id="excluir_id">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                <button type="button" class="btn btn-primary" onclick="Excluir()">Sim</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <th>Descrição</th>
+        <th>Tipo</th>
+        <th>Data</th>
+        <th>Plano de Conta</th>
+        <th>Valor</th>
+        <th>#</th>
+        <th>#</th>
+    </tr>
+
+    @{
+        foreach (var item in (List<TransacaoModel>)ViewBag.ListItems)
+        {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Historico</td>
+                        <td>@item.Tipo</td>
+                        <td>@item.Data</td>
+                        <td>@item.Descricao</td>
+                        <td>R$@string.Format(new CultureInfo("pt-BR"), "{0:#,0.00}", item.Valor)</td>
+                        <td><button type="button" class="btn btn-block btn-outline-warning"
+                                onclick="Atualizar(@item.Id.ToString())">Editar</button></td>
+                        <td>
+                            <button type="button" class="btn btn-block btn-outline-danger" data-bs-toggle="modal" 
+                                    data-bs-target="#modal_confirm" 
+                                    onclick="pre_excluir(@item.Id.ToString(), '@item.Historico')">Excluir
+                            </button>
+                        </td>
+                    </tr>
+        }
+    }
+</table>
+
+<script>
+    function pre_excluir (id, desc) {
+        document.getElementsByClassName('excluir_id').value = id;
+        document.getElementsByClassName('modal-body')[0].innerHTML = desc;
+    }
+
+    function Adicionar () {
+        window.location.href = "./Cadastro"
+    }
+
+    function Atualizar (id) {
+        window.location.href = "./Cadastro/" + id;
+    }
+
+    function Excluir () {
+        const id = document.getElementsByClassName('excluir_id').value;
+        window.location.href = "./Excluir/" + id;
+    }
+</script>

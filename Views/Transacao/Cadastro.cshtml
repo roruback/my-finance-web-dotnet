@@ -1,0 +1,120 @@
+@model TransacaoModel
+
+@{
+    ViewData["Title"] = "Cadastro de movimentação Financeira";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-controller="Transacao" asp-action="Cadastro" method="post" onsubmit="javascript: return valideForm();">
+    <div class="container">
+        <div class="mb-3">
+            <input type="hidden" id="txtId" class="form-control" asp-for="Id" />
+            <label class="form-label" for="txtDescricao">Descrição</label>
+            <input type="text" id="txtDescricao" class="form-control" asp-for="Historico" />
+            <input type="hidden" id="txtTipo" class="form-control" asp-for="Tipo" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Plano de contas</label>
+            @Html.DropDownListFor(m => m.PlanocontaId, Model.PlanoContaSelectList, new
+                {
+                    @id = "planocontas_cb",
+                    @class = "form-select",
+                    @onchange = "javascript:change_pc()"
+                })
+        </div>
+        <div id="ipc_D" class="alert alert-warning d-none" role="alert">
+            Despesa
+        </div>
+        <div id="ipc_R" class="alert alert-info d-none" role="alert">
+            Receita
+        </div>
+
+        
+
+        <div id="planocontas_dv" class="d-none">
+            @{
+                foreach (var item in Model.PlanocontaList)
+                {
+                    <span id="pci_@item.Id" alt="@item.Tipo">@item.Descricao</span>
+                }
+            }
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="txtValor">Valor</label>
+            <input type="number" id="txtValor" class="form-control" asp-for="Valor" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="txtData">Data</label>
+            <input type="date" id="txtData" class="form-control" asp-for="Data" />
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary btn-lg">Salvar</button>
+            <button type="button" class="btn btn-secondary btn-lg" onclick="Voltar()">Cancelar</button>
+        </div>
+
+    </div>
+</form>
+
+
+<script>
+    function clear_alert () {
+        let arr = new Array('ipc_D', 'ipc_R');
+        arr.forEach((id) => {
+            let el = document.getElementById(id);
+            if (el) el.classList.add('d-none');
+        });
+    }
+
+    function get_tipo_trans () {
+        let tipo = "";
+        let obj = document.getElementById("planocontas_cb");
+        const ipc = $(`#pci_${obj.value}`);
+        if (ipc) tipo = ipc.attr('alt');
+        return tipo.toLocaleUpperCase();
+    }
+
+    function change_pc () {
+        let tipo = get_tipo_trans();
+        if (tipo) {
+            clear_alert();
+            document.getElementById('txtTipo').value = tipo;
+            
+            let id = `ipc_${tipo}`;
+            let el = document.getElementById(id);
+            if (el) el.classList.remove('d-none');
+            /*
+            let fopc = document.getElementById("fop_container");
+            let fopcb = document.getElementById("formapagamento_cb");
+            if (tipo == "D") {
+                fopc.classList.remove('d-none');
+            }
+            else {
+                fopc.classList.add('d-none');
+                fopcb.value = "";
+            }*/
+        }
+    }
+
+    function valideForm () {
+        let feedFop = document.getElementById("validationFopFeedback");
+        feedFop.style.display = 'none';
+        let tipo = get_tipo_trans();
+        if (tipo == 'D') {
+            let fopcb = document.getElementById("formapagamento_cb");
+            if (fopcb.value == "") {
+                feedFop.style.display = 'block';
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function Voltar () {
+        window.location.href = "/Transacao/Index";
+    }
+
+    window.addEventListener("load", (ev) => {
+        change_pc();
+    });
+</script>
