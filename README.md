@@ -1,5 +1,5 @@
-Trabalho da Disciplina de Práticas de Implementação e Evolução de Software - Professor: Filipe Tório.
-Pós Graduação em Engenharia de Software  - PUC MINAS
+#Trabalho da Disciplina de Práticas de Implementação e Evolução de Software - Professor: Filipe Tório.
+#Pós Graduação em Engenharia de Software  - PUC MINAS
 
 Grupo de alunos: 
 - Daniel Nascimento Cruz
