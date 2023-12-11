@@ -5,7 +5,7 @@ Grupo de alunos:
 - Daniel Nascimento Cruz
 - Fabrício Gomes Ribeiro
 - Rodolfo Oliveira Ruback
-- Thalles Oliveira
+- Thalles Ariel Oliveira Santos
   
 
 # ARQUITETURA PROPOSTA:
